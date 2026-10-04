@@ -1,1 +1,103 @@
 
+* {
+    box-sizing: border-box;
+}
+
+
+/* Whole page */
+body {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background-color: #eef2f3;
+
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+}
+
+
+
+.app-container {
+    width: 100%;
+    max-width: 420px;
+
+    min-height: 100vh;
+
+    background-color: white;
+
+    padding: 40px 25px;
+
+    text-align: center;
+}
+
+
+/* Main page title */
+h1 {
+    margin-bottom: 10px;
+}
+
+
+/* Second page title */
+h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+
+/* Text below page titles */
+.subtitle {
+    color: #666;
+
+    margin-bottom: 30px;
+}
+
+
+/* Form labels */
+label {
+    display: block;
+
+    text-align: left;
+
+    margin-top: 15px;
+    margin-bottom: 5px;
+
+    font-weight: bold;
+}
+
+
+/* Form input boxes */
+input {
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    font-size: 16px;
+}
+
+
+/* Buttons */
+button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 20px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #333;
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
