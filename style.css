@@ -101,3 +101,121 @@ button {
 
     cursor: pointer;
 }
+
+
+
+button:hover {
+    background-color: #555;
+}
+
+
+
+.bottom-text {
+    margin-top: 25px;
+}
+
+
+/* Links */
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* Dashboard cards */
+.dashboard-card {
+    text-align: left;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    padding: 15px;
+
+    margin-top: 15px;
+}
+
+/* Password requirement text */
+.password-info {
+    text-align: left;
+    color: #666;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* Dashboard card titles */
+.dashboard-card h3 {
+    margin-top: 0;
+}
+
+
+/* Profile information box */
+.profile-card {
+    text-align: left;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    padding: 20px;
+
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+
+/* Profile labels */
+.profile-card label {
+    font-weight: bold;
+
+    margin-top: 10px;
+}
+
+
+/* Profile information */
+.profile-card p {
+    margin-top: 5px;
+    margin-bottom: 20px;
+
+    color: #555;
+}
+
+
+/* Error messages */
+.error-message {
+    display: none;
+
+    color: red;
+
+    font-size: 14px;
+
+    margin-top: 15px;
+}
+
+
+/* Successful account message */
+.success-message {
+    display: none;
+
+    color: green;
+
+    font-size: 14px;
+
+    margin-top: 15px;
+}
+
+
+/*
+Larger computer screen,
+makes the website look like a mobile application.
+*/
+@media (min-width: 600px) {
+
+    .app-container {
+        min-height: 700px;
+
+        border-radius: 20px;
+
+        box-shadow:
+            0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+}
