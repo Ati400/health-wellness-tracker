@@ -66,3 +66,79 @@ if (profileName && profileEmail) {
         });
 
 }
+
+// --------------------------------
+// LOGOUT
+// --------------------------------
+
+// Find the logout button
+const logoutButton =
+    document.getElementById("logoutButton");
+
+
+// Only run if a logout button exists
+if (logoutButton) {
+
+    logoutButton.addEventListener(
+        "click",
+        function() {
+
+            // Send the user to the logout route
+            window.location.href = "/logout";
+
+        }
+    );
+
+}
+
+// --------------------------------
+// PAGE MESSAGES
+// --------------------------------
+
+// Read information from the page address
+const pageUrl =
+    new URLSearchParams(window.location.search);
+
+
+// Find our message elements
+const loginError =
+    document.getElementById("loginError");
+
+const accountCreated =
+    document.getElementById("accountCreated");
+
+const emailError =
+    document.getElementById("emailError");
+
+
+// Show incorrect login message
+if (
+    pageUrl.get("error") === "1"
+    && loginError
+) {
+
+    loginError.style.display = "block";
+
+}
+
+
+// Show account created message
+if (
+    pageUrl.get("created") === "1"
+    && accountCreated
+) {
+
+    accountCreated.style.display = "block";
+
+}
+
+
+// Show duplicate email message
+if (
+    pageUrl.get("error") === "email"
+    && emailError
+) {
+
+    emailError.style.display = "block";
+
+}
