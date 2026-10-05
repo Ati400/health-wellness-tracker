@@ -1,0 +1,5 @@
+# Ignore pycache
+__pycache__
+
+# Ignore health_wellness.db
+health_wellness.db
