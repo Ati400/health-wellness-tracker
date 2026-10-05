@@ -148,3 +148,109 @@ def dashboard():
 
     # Show the dashboard
     return send_from_directory(".", "dashboard.html")
+
+# -----------------------------
+# PROFILE
+# -----------------------------
+
+@app.route("/profile")
+def profile():
+
+    # Make sure the user is logged in
+    if "user_id" not in session:
+        return redirect("/")
+
+    # Show the profile page
+    return send_from_directory(".", "profile.html")
+
+# -----------------------------
+# USER INFORMATION
+# -----------------------------
+
+@app.route("/user")
+def get_user():
+
+    # Make sure someone is logged in
+    if "user_id" not in session:
+        return {
+            "name": "",
+            "email": ""
+        }
+
+    # Get the logged-in user's ID
+    user_id = session["user_id"]
+
+    # Connect to the database
+    connection = sqlite3.connect("health_wellness.db")
+    cursor = connection.cursor()
+
+    # Find the logged-in user's information
+    cursor.execute(
+        """
+        SELECT name, email
+        FROM users
+        WHERE id = ?
+        """,
+        (user_id,)
+    )
+
+    user = cursor.fetchone()
+
+    # Close the database
+    connection.close()
+
+
+    # Return the user's information
+    if user:
+        return {
+            "name": user[0],
+            "email": user[1]
+        }
+
+    return {
+        "name": "",
+        "email": ""
+    }
+
+# -----------------------------
+# LOGOUT
+# -----------------------------
+
+@app.route("/logout")
+def logout():
+
+    # Remove the user's login information
+    session.clear()
+
+    # Return to the login page
+    return redirect("/")
+
+# -----------------------------
+# CSS FILE
+# -----------------------------
+
+@app.route("/style.css")
+def style():
+
+    return send_from_directory(".", "style.css")
+
+
+# -----------------------------
+# JAVASCRIPT FILE
+# -----------------------------
+
+@app.route("/script.js")
+def script():
+
+    return send_from_directory(".", "script.js")
+
+
+# -----------------------------
+# START THE WEBSITE
+# -----------------------------
+
+if __name__ == "__main__":
+
+    # use_reloader=False prevents the server
+    # from restarting while we are testing
+    app.run(debug=True, use_reloader=False)
