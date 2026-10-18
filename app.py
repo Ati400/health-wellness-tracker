@@ -1,15 +1,14 @@
 # Import the Flask tools we need
-from flask import Flask, request, redirect, session, send_from_directory
-
-# Password security and reset
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, request, redirect, session, send_from_directory, render_template_string
 from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
-
-# Sprint 2 - Read HTML files and track dates
-from pathlib import Path
-from datetime import date
+from werkzeug.security import generate_password_hash, check_password_hash
 # Import SQLite so we can use our database
 import sqlite3
+
+# SPRINT 2 ADDED
+# Allows us to read our nutrition and workout HTML files
+from pathlib import Path
+from datetime import date
 
 # Create our Flask application
 app = Flask(__name__)
@@ -34,11 +33,6 @@ def init_database():
 
     connection.commit()
     connection.close()
-# Sprint 2 - Database connection for tracking
-def tracking_connection():
-    connection = sqlite3.connect("health_wellness.db")
-    connection.row_factory = sqlite3.Row
-    return connection
     
 # -----------------------------
 # HOME / LOGIN PAGE
@@ -50,6 +44,7 @@ def home():
     # Show the login page
     return send_from_directory(".", "index.html")
 
+
 # -----------------------------
 # REGISTER PAGE
 # -----------------------------
@@ -59,6 +54,104 @@ def register_page():
 
     # Show the create account page
     return send_from_directory(".", "register.html")
+
+
+
+# -----------------------------
+# FORGOT PASSWORD
+# -----------------------------
+
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+
+    if request.method == "GET":
+        return send_from_directory(".", "forgot_password.html")
+
+    email = request.form.get("email", "").strip()
+
+    connection = tracking_connection()
+
+    user = connection.execute(
+        "SELECT id FROM users WHERE LOWER(TRIM(email)) = LOWER(TRIM(?))",
+        (email,)
+    ).fetchone()
+
+    connection.close()
+
+    if not user:
+        return "If the email is registered, a reset link will be available."
+
+    # Generate a temporary reset token
+    serializer = URLSafeTimedSerializer(app.secret_key)
+
+    token = serializer.dumps(
+        user["id"],
+        salt="password-reset"
+    )
+
+    # Local classroom demonstration only
+    reset_link = f"http://127.0.0.1:5000/reset-password/{token}"
+
+    return f"""
+        <h2>LifeTrack Password Reset</h2>
+        <p>For local testing, open this reset link:</p>
+        <a href="{reset_link}">Reset My Password</a>
+        <p>This link expires after 15 minutes.</p>
+    """
+
+
+# -----------------------------
+# RESET PASSWORD
+# -----------------------------
+
+@app.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+
+    serializer = URLSafeTimedSerializer(app.secret_key)
+
+    try:
+        user_id = serializer.loads(
+            token,
+            salt="password-reset",
+            max_age=900
+        )
+
+    except (BadSignature, SignatureExpired):
+        return "This reset link is invalid or expired.", 400
+
+    if request.method == "GET":
+        return render_template_string(
+            Path(__file__).with_name("reset_password.html").read_text(
+                encoding="utf-8"
+            ),
+            token=token,
+            error=None
+        )
+
+    password = request.form.get("password", "")
+    confirm_password = request.form.get("confirm_password", "")
+
+    if len(password) < 8 or password != confirm_password:
+        return render_template_string(
+            Path(__file__).with_name("reset_password.html").read_text(
+                encoding="utf-8"
+            ),
+            token=token,
+            error="Passwords must match and contain at least 8 characters."
+        )
+
+    connection = tracking_connection()
+
+    connection.execute(
+        "UPDATE users SET password = ? WHERE id = ?",
+        (generate_password_hash(password), user_id)
+    )
+
+    connection.commit()
+    connection.close()
+
+    return redirect("/?reset=1")
+
 
 # -----------------------------
 # CREATE ACCOUNT
@@ -113,6 +206,7 @@ def create_account():
     # Send the user to the login page
     return redirect("/?created=1")
 
+
 # -----------------------------
 # LOGIN
 # -----------------------------
@@ -133,14 +227,11 @@ def login():
     cursor = connection.cursor()
 
     # Look for an account with this email and password
-    cursor.execute(
-        """
-        SELECT id, name, email
+    cursor.execute("""
+        SELECT id, name, email, password
         FROM users
-        WHERE email = ? AND password = ?
-        """,
-        (email, password)
-    )
+        WHERE email = ?
+    """, (email,))
 
     # Get the account if it exists
     user = cursor.fetchone()
@@ -149,8 +240,13 @@ def login():
     connection.close()
 
 
+    
     # Check if the account was found
-    if user:
+    if user and (
+        check_password_hash(user[3], password)
+        if user[3].startswith(("scrypt:", "pbkdf2:"))
+        else user[3] == password
+    ):
 
         # Save information about the logged-in user
         session["user_id"] = user[0]
@@ -160,9 +256,11 @@ def login():
         return redirect("/dashboard")
 
 
+
     # If login information was incorrect,
     # return to the login page
     return redirect("/?error=1")
+
 
 # -----------------------------
 # DASHBOARD
@@ -178,6 +276,7 @@ def dashboard():
     # Show the dashboard
     return send_from_directory(".", "dashboard.html")
 
+
 # -----------------------------
 # PROFILE
 # -----------------------------
@@ -191,6 +290,7 @@ def profile():
 
     # Show the profile page
     return send_from_directory(".", "profile.html")
+
 
 # -----------------------------
 # USER INFORMATION
@@ -241,6 +341,7 @@ def get_user():
         "email": ""
     }
 
+
 # -----------------------------
 # LOGOUT
 # -----------------------------
@@ -253,6 +354,7 @@ def logout():
 
     # Return to the login page
     return redirect("/")
+
 
 # -----------------------------
 # CSS FILE
@@ -273,8 +375,23 @@ def script():
 
     return send_from_directory(".", "script.js")
 
+
+
+# ========== SPRINT 2 ADDED ==========
+
+# Connect to the database for nutrition and workouts
+def tracking_connection():
+
+    connection = sqlite3.connect("health_wellness.db")
+
+    # Allow us to access columns by their names
+    connection.row_factory = sqlite3.Row
+
+    return connection
+
+
 # -----------------------------
-# SPRINT 2 - NUTRITION TRACKING
+# NUTRITION TRACKING
 # -----------------------------
 
 @app.route("/nutrition", methods=["GET", "POST"])
@@ -313,7 +430,6 @@ def nutrition():
 
         except ValueError:
             error = "Please enter valid food information."
-
     # Get saved food for this user
     entries = connection.execute("""
         SELECT id, food_name, calories, entry_date
@@ -321,9 +437,8 @@ def nutrition():
         WHERE user_id = ?
         ORDER BY id DESC
     """, (session["user_id"],)).fetchall()
-
+        
     connection.close()
-
     # Display nutrition page
     return render_template_string(
         Path(__file__).with_name("nutrition.html").read_text(
@@ -333,8 +448,10 @@ def nutrition():
         error=error,
         saved=request.args.get("saved")
     )
+
+
 # -----------------------------
-# SPRINT 2 - WORKOUT TRACKING
+# WORKOUT TRACKING
 # -----------------------------
 
 @app.route("/workouts", methods=["GET", "POST"])
@@ -395,8 +512,12 @@ def workouts():
         error=error,
         saved=request.args.get("saved")
     )
+
+
+
+
 # -----------------------------
-# SPRINT 2 - WATER TRACKING
+# WATER TRACKING
 # -----------------------------
 
 @app.route("/water", methods=["GET", "POST"])
@@ -433,7 +554,7 @@ def water():
 
     # Get saved water entries
     entries = connection.execute("""
-        SELECT id, amount, entry_date
+        SELECT id,amount, entry_date
         FROM water
         WHERE user_id = ?
         ORDER BY id DESC
@@ -441,7 +562,6 @@ def water():
 
     connection.close()
 
-    # Display water tracking page
     return render_template_string(
         Path(__file__).with_name("water.html").read_text(
             encoding="utf-8"
@@ -451,8 +571,9 @@ def water():
         saved=request.args.get("saved")
     )
 
+
 # -----------------------------
-# SPRINT 2 - SLEEP TRACKING
+# SLEEP TRACKING
 # -----------------------------
 
 @app.route("/sleep", methods=["GET", "POST"])
@@ -489,7 +610,7 @@ def sleep():
 
     # Get saved sleep entries
     entries = connection.execute("""
-        SELECT id, hours, entry_date
+        SELECT id,hours, entry_date
         FROM sleep
         WHERE user_id = ?
         ORDER BY id DESC
@@ -497,7 +618,6 @@ def sleep():
 
     connection.close()
 
-    # Display sleep tracking page
     return render_template_string(
         Path(__file__).with_name("sleep.html").read_text(
             encoding="utf-8"
@@ -507,14 +627,11 @@ def sleep():
         saved=request.args.get("saved")
     )
 
-# -----------------------------
-# SPRINT 2 - MY PROGRESS PAGE
-# -----------------------------
+# MY PROGRESS PAGE
 
 @app.route("/progress")
 def progress():
 
-    # Make sure the user is logged in
     if "user_id" not in session:
         return redirect("/")
 
@@ -522,37 +639,46 @@ def progress():
     today = date.today().isoformat()
 
     conn = tracking_connection()
+    conn.row_factory = sqlite3.Row
 
-    # Get today's water total
-    water_total = conn.execute("""
+    water_total = conn.execute(
+        """
         SELECT COALESCE(SUM(amount), 0)
         FROM water
         WHERE user_id = ? AND date(entry_date) = ?
-    """, (user_id, today)).fetchone()[0]
+        """,
+        (user_id, today)
+    ).fetchone()[0]
 
-    # Get today's workout total
-    workout_total = conn.execute("""
+    workout_total = conn.execute(
+        """
         SELECT COALESCE(SUM(duration), 0)
         FROM workouts
         WHERE user_id = ? AND date(entry_date) = ?
-    """, (user_id, today)).fetchone()[0]
+        """,
+        (user_id, today)
+    ).fetchone()[0]
 
-    # Get today's sleep total
-    sleep_total = conn.execute("""
+    sleep_total = conn.execute(
+        """
         SELECT COALESCE(SUM(hours), 0)
         FROM sleep
         WHERE user_id = ? AND date(entry_date) = ?
-    """, (user_id, today)).fetchone()[0]
+        """,
+        (user_id, today)
+    ).fetchone()[0]
 
-    # Get today's calorie total
-    calorie_total = conn.execute("""
+    calorie_total = conn.execute(
+        """
         SELECT COALESCE(SUM(calories), 0)
         FROM nutrition
         WHERE user_id = ? AND date(entry_date) = ?
-    """, (user_id, today)).fetchone()[0]
+        """,
+        (user_id, today)
+    ).fetchone()[0]
 
-    # Get recent tracking activities
-    recent_entries = conn.execute("""
+    recent_entries = conn.execute(
+        """
         SELECT 'Water' AS category,
                CAST(amount AS TEXT) || ' mL' AS details,
                entry_date
@@ -583,11 +709,12 @@ def progress():
 
         ORDER BY entry_date DESC
         LIMIT 20
-    """, (user_id, user_id, user_id, user_id)).fetchall()
+        """,
+        (user_id, user_id, user_id, user_id)
+    ).fetchall()
 
     conn.close()
 
-    # Display the progress page
     return render_template_string(
         Path(__file__).with_name("progress.html").read_text(
             encoding="utf-8"
@@ -599,9 +726,10 @@ def progress():
         calorie_total=calorie_total,
         recent_entries=recent_entries
     )
-# -----------------------------
-# SPRINT 2 - DELETE TRACKING ENTRY
-# -----------------------------
+
+# =====================================
+# DELETE TRACKING ENTRY
+# =====================================
 
 @app.route("/delete-entry/<category>/<int:entry_id>", methods=["POST"])
 def delete_entry(category, entry_id):
@@ -630,10 +758,6 @@ def delete_entry(category, entry_id):
 
     # Return to the correct tracking page
     return redirect("/" + category)
-    
-# -----------------------------
-# START THE WEBSITE
-# -----------------------------
 
 if __name__ == "__main__":
     init_database()
