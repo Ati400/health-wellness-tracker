@@ -11,9 +11,8 @@
 
 <div class="dashboard-layout">
 
-
-	<!-- Sidebar -->
-	<aside class="sidebar">
+    <!-- Sidebar -->
+    <aside class="sidebar">
 
         <h2 class="sidebar-logo">LifeTrack</h2>
         <p class="sidebar-subtitle">Health & Wellness</p>
@@ -34,10 +33,10 @@
 
     </aside>
 
-    <!-- Main content -->
+    <!-- main content -->
     <main class="dashboard-main">
-    
-		<header class="dashboard-header">
+
+        <header class="dashboard-header">
             <div>
                 <p class="section-label">DAILY WELLNESS TRACKING</p>
                 <h1>Nutrition Tracking</h1>
@@ -46,8 +45,8 @@
                 </p>
             </div>
         </header>
-        
-        <!-- Nutrition form -->
+
+        <!-- nutrition form -->
         <section class="tracking-panel">
 
             <h2>Add Food Entry</h2>
@@ -55,7 +54,7 @@
             <p class="tracking-description">
                 Enter the food you ate and its calories.
             </p>
-            
+
             {% if error %}
             <p class="tracking-error">{{ error }}</p>
             {% endif %}
@@ -92,8 +91,8 @@
             </form>
 
         </section>
-        
-        <!-- Saved food entries -->
+
+        <!-- the saved food entries -->
         <section class="tracking-panel">
 
             <h2>My Food Entries</h2>
@@ -104,12 +103,35 @@
 
                 <div class="tracking-entry entry-with-menu">
 
-                    <!-- Food information -->
+                    <!-- food information -->
                     <div>
                         <strong>{{ entry["food_name"] }}</strong>
                         <p>Calories: {{ entry["calories"] }}</p>
                         <small>{{ entry["entry_date"] }}</small>
                     </div>
+
+                    <!-- Three-dot menu -->
+                    <details class="entry-menu">
+
+                        <summary aria-label="Entry options">
+                            &#8942;
+                        </summary>
+
+                        <div class="entry-menu-dropdown">
+
+                            <form
+                                action="/delete-entry/nutrition/{{ entry['id'] }}"
+                                method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this food entry?');"
+                            >
+                                <button type="submit" class="menu-delete">
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </details>
 
                 </div>
 
@@ -124,7 +146,7 @@
             {% endif %}
 
         </section>
-        
+
     </main>
 
 </div>
