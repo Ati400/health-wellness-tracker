@@ -47,6 +47,42 @@
             </div>
         </header>
         
+        <!-- Nutrition form -->
+        <section class="tracking-panel">
+
+            <h2>Add Food Entry</h2>
+
+            <p class="tracking-description">
+                Enter the food you ate and its calories.
+            </p>
+
+            <form action="/nutrition" method="POST">
+
+                <label for="food_name">Food Name</label>
+                <input
+                    type="text"
+                    id="food_name"
+                    name="food_name"
+                    placeholder="Example: Chicken and rice"
+                    required
+                >
+
+                <label for="calories">Calories</label>
+                <input
+                    type="number"
+                    id="calories"
+                    name="calories"
+                    placeholder="Example: 450"
+                    min="0"
+                    required
+                >
+
+                <button type="submit">Save Food</button>
+
+            </form>
+
+        </section>
+        
     </main>
 
 </div>
