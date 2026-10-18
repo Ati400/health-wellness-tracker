@@ -93,6 +93,38 @@
 
         </section>
         
+        <!-- Saved food entries -->
+        <section class="tracking-panel">
+
+            <h2>My Food Entries</h2>
+
+            {% if entries %}
+
+                {% for entry in entries %}
+
+                <div class="tracking-entry entry-with-menu">
+
+                    <!-- Food information -->
+                    <div>
+                        <strong>{{ entry["food_name"] }}</strong>
+                        <p>Calories: {{ entry["calories"] }}</p>
+                        <small>{{ entry["entry_date"] }}</small>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="tracking-description">
+                    No food entries yet.
+                </p>
+
+            {% endif %}
+
+        </section>
+        
     </main>
 
 </div>
