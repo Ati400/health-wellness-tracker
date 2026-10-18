@@ -273,7 +273,67 @@ def script():
 
     return send_from_directory(".", "script.js")
 
+# -----------------------------
+# SPRINT 2 - NUTRITION TRACKING
+# -----------------------------
 
+@app.route("/nutrition", methods=["GET", "POST"])
+def nutrition():
+
+    # Make sure the user is logged in
+    if "user_id" not in session:
+        return redirect("/")
+
+    connection = tracking_connection()
+    error = None
+
+    # Save food when the form is submitted
+    if request.method == "POST":
+
+        food_name = request.form.get("food_name", "").strip()
+
+        try:
+            calories = int(request.form.get("calories", ""))
+
+            # Check if the information is valid
+            if not food_name or calories < 0:
+                raise ValueError
+
+            # Save food for the logged-in user
+            connection.execute("""
+                INSERT INTO nutrition
+                (user_id, food_name, calories)
+                VALUES (?, ?, ?)
+            """, (session["user_id"], food_name, calories))
+
+            connection.commit()
+            connection.close()
+
+            return redirect("/nutrition?saved=1")
+
+        except ValueError:
+            error = "Please enter valid food information."
+
+    # Get saved food for this user
+    entries = connection.execute("""
+        SELECT id, food_name, calories, entry_date
+        FROM nutrition
+        WHERE user_id = ?
+        ORDER BY id DESC
+    """, (session["user_id"],)).fetchall()
+
+    connection.close()
+
+    # Display nutrition page
+    return render_template_string(
+        Path(__file__).with_name("nutrition.html").read_text(
+            encoding="utf-8"
+        ),
+        entries=entries,
+        error=error,
+        saved=request.args.get("saved")
+    )
+    
 # -----------------------------
 # START THE WEBSITE
 # -----------------------------
