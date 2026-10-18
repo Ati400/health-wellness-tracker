@@ -395,6 +395,61 @@ def workouts():
         error=error,
         saved=request.args.get("saved")
     )
+# -----------------------------
+# SPRINT 2 - WATER TRACKING
+# -----------------------------
+
+@app.route("/water", methods=["GET", "POST"])
+def water():
+
+    # Make sure the user is logged in
+    if "user_id" not in session:
+        return redirect("/")
+
+    connection = tracking_connection()
+    error = None
+
+    # Save water intake
+    if request.method == "POST":
+
+        try:
+            amount = int(request.form.get("amount", ""))
+
+            if amount <= 0:
+                raise ValueError
+
+            connection.execute("""
+                INSERT INTO water (user_id, amount)
+                VALUES (?, ?)
+            """, (session["user_id"], amount))
+
+            connection.commit()
+            connection.close()
+
+            return redirect("/water?saved=1")
+
+        except ValueError:
+            error = "Please enter a valid water amount."
+
+    # Get saved water entries
+    entries = connection.execute("""
+        SELECT id, amount, entry_date
+        FROM water
+        WHERE user_id = ?
+        ORDER BY id DESC
+    """, (session["user_id"],)).fetchall()
+
+    connection.close()
+
+    # Display water tracking page
+    return render_template_string(
+        Path(__file__).with_name("water.html").read_text(
+            encoding="utf-8"
+        ),
+        entries=entries,
+        error=error,
+        saved=request.args.get("saved")
+    )
     
 # -----------------------------
 # START THE WEBSITE
