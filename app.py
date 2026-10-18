@@ -600,6 +600,38 @@ def progress():
         recent_entries=recent_entries
     )
 # -----------------------------
+# SPRINT 2 - DELETE TRACKING ENTRY
+# -----------------------------
+
+@app.route("/delete-entry/<category>/<int:entry_id>", methods=["POST"])
+def delete_entry(category, entry_id):
+
+    # Make sure the user is logged in
+    if "user_id" not in session:
+        return redirect("/")
+
+    # Only allow our four tracking tables
+    allowed_tables = ["nutrition", "workouts", "water", "sleep"]
+
+    if category not in allowed_tables:
+        return "Invalid category", 404
+
+    # Connect to the database
+    connection = tracking_connection()
+
+    # Delete only the selected entry belonging to this user
+    connection.execute(
+        f"DELETE FROM {category} WHERE id = ? AND user_id = ?",
+        (entry_id, session["user_id"])
+    )
+
+    connection.commit()
+    connection.close()
+
+    # Return to the correct tracking page
+    return redirect("/" + category)
+    
+# -----------------------------
 # START THE WEBSITE
 # -----------------------------
 
