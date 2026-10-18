@@ -55,6 +55,16 @@
             <p class="tracking-description">
                 Enter the food you ate and its calories.
             </p>
+            
+            {% if error %}
+            <p class="tracking-error">{{ error }}</p>
+            {% endif %}
+
+            {% if saved %}
+            <p class="tracking-success">
+                Food entry saved successfully!
+            </p>
+            {% endif %}
 
             <form action="/nutrition" method="POST">
 
