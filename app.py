@@ -450,7 +450,62 @@ def water():
         error=error,
         saved=request.args.get("saved")
     )
-    
+
+# -----------------------------
+# SPRINT 2 - SLEEP TRACKING
+# -----------------------------
+
+@app.route("/sleep", methods=["GET", "POST"])
+def sleep():
+
+    # Make sure the user is logged in
+    if "user_id" not in session:
+        return redirect("/")
+
+    connection = tracking_connection()
+    error = None
+
+    # Save sleep hours
+    if request.method == "POST":
+
+        try:
+            hours = float(request.form.get("hours", ""))
+
+            if not (0.5 <= hours <= 24):
+                raise ValueError
+
+            connection.execute("""
+                INSERT INTO sleep (user_id, hours)
+                VALUES (?, ?)
+            """, (session["user_id"], hours))
+
+            connection.commit()
+            connection.close()
+
+            return redirect("/sleep?saved=1")
+
+        except ValueError:
+            error = "Please enter valid sleep hours."
+
+    # Get saved sleep entries
+    entries = connection.execute("""
+        SELECT id, hours, entry_date
+        FROM sleep
+        WHERE user_id = ?
+        ORDER BY id DESC
+    """, (session["user_id"],)).fetchall()
+
+    connection.close()
+
+    # Display sleep tracking page
+    return render_template_string(
+        Path(__file__).with_name("sleep.html").read_text(
+            encoding="utf-8"
+        ),
+        entries=entries,
+        error=error,
+        saved=request.args.get("saved")
+    )
 # -----------------------------
 # START THE WEBSITE
 # -----------------------------
