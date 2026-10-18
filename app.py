@@ -333,6 +333,68 @@ def nutrition():
         error=error,
         saved=request.args.get("saved")
     )
+# -----------------------------
+# SPRINT 2 - WORKOUT TRACKING
+# -----------------------------
+
+@app.route("/workouts", methods=["GET", "POST"])
+def workouts():
+
+    # Make sure the user is logged in
+    if "user_id" not in session:
+        return redirect("/")
+
+    connection = tracking_connection()
+    error = None
+
+    # Save workout when the form is submitted
+    if request.method == "POST":
+
+        workout_type = request.form.get(
+            "workout_type", ""
+        ).strip()
+
+        try:
+            duration = int(request.form.get("duration", ""))
+
+            # Check if workout information is valid
+            if not workout_type or duration <= 0:
+                raise ValueError
+
+            # Save workout for the logged-in user
+            connection.execute("""
+                INSERT INTO workouts
+                (user_id, workout_type, duration)
+                VALUES (?, ?, ?)
+            """, (session["user_id"], workout_type, duration))
+
+            connection.commit()
+            connection.close()
+
+            return redirect("/workouts?saved=1")
+
+        except ValueError:
+            error = "Please enter valid workout information."
+
+    # Get saved workouts for this user
+    entries = connection.execute("""
+        SELECT id, workout_type, duration, entry_date
+        FROM workouts
+        WHERE user_id = ?
+        ORDER BY id DESC
+    """, (session["user_id"],)).fetchall()
+
+    connection.close()
+
+    # Display workout page
+    return render_template_string(
+        Path(__file__).with_name("workouts.html").read_text(
+            encoding="utf-8"
+        ),
+        entries=entries,
+        error=error,
+        saved=request.args.get("saved")
+    )
     
 # -----------------------------
 # START THE WEBSITE
