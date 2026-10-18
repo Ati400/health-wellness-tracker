@@ -506,6 +506,99 @@ def sleep():
         error=error,
         saved=request.args.get("saved")
     )
+
+# -----------------------------
+# SPRINT 2 - MY PROGRESS PAGE
+# -----------------------------
+
+@app.route("/progress")
+def progress():
+
+    # Make sure the user is logged in
+    if "user_id" not in session:
+        return redirect("/")
+
+    user_id = session["user_id"]
+    today = date.today().isoformat()
+
+    conn = tracking_connection()
+
+    # Get today's water total
+    water_total = conn.execute("""
+        SELECT COALESCE(SUM(amount), 0)
+        FROM water
+        WHERE user_id = ? AND date(entry_date) = ?
+    """, (user_id, today)).fetchone()[0]
+
+    # Get today's workout total
+    workout_total = conn.execute("""
+        SELECT COALESCE(SUM(duration), 0)
+        FROM workouts
+        WHERE user_id = ? AND date(entry_date) = ?
+    """, (user_id, today)).fetchone()[0]
+
+    # Get today's sleep total
+    sleep_total = conn.execute("""
+        SELECT COALESCE(SUM(hours), 0)
+        FROM sleep
+        WHERE user_id = ? AND date(entry_date) = ?
+    """, (user_id, today)).fetchone()[0]
+
+    # Get today's calorie total
+    calorie_total = conn.execute("""
+        SELECT COALESCE(SUM(calories), 0)
+        FROM nutrition
+        WHERE user_id = ? AND date(entry_date) = ?
+    """, (user_id, today)).fetchone()[0]
+
+    # Get recent tracking activities
+    recent_entries = conn.execute("""
+        SELECT 'Water' AS category,
+               CAST(amount AS TEXT) || ' mL' AS details,
+               entry_date
+        FROM water WHERE user_id = ?
+
+        UNION ALL
+
+        SELECT 'Workout',
+               workout_type || ' - ' ||
+               CAST(duration AS TEXT) || ' minutes',
+               entry_date
+        FROM workouts WHERE user_id = ?
+
+        UNION ALL
+
+        SELECT 'Sleep',
+               CAST(hours AS TEXT) || ' hours',
+               entry_date
+        FROM sleep WHERE user_id = ?
+
+        UNION ALL
+
+        SELECT 'Nutrition',
+               food_name || ' - ' ||
+               CAST(calories AS TEXT) || ' calories',
+               entry_date
+        FROM nutrition WHERE user_id = ?
+
+        ORDER BY entry_date DESC
+        LIMIT 20
+    """, (user_id, user_id, user_id, user_id)).fetchall()
+
+    conn.close()
+
+    # Display the progress page
+    return render_template_string(
+        Path(__file__).with_name("progress.html").read_text(
+            encoding="utf-8"
+        ),
+        today=today,
+        water_total=water_total,
+        workout_total=workout_total,
+        sleep_total=sleep_total,
+        calorie_total=calorie_total,
+        recent_entries=recent_entries
+    )
 # -----------------------------
 # START THE WEBSITE
 # -----------------------------
