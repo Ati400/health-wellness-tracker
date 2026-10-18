@@ -18,6 +18,28 @@ app = Flask(__name__)
 # Sessions help us remember who is logged in
 app.secret_key = "health_wellness_project"
 
+# Create the users table if it does not already exist
+def init_database():
+    connection = sqlite3.connect("health_wellness.db")
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL
+        )
+    """)
+
+    connection.commit()
+    connection.close()
+# Sprint 2 - Database connection for tracking
+def tracking_connection():
+    connection = sqlite3.connect("health_wellness.db")
+    connection.row_factory = sqlite3.Row
+    return connection
+    
 # -----------------------------
 # HOME / LOGIN PAGE
 # -----------------------------
@@ -257,7 +279,5 @@ def script():
 # -----------------------------
 
 if __name__ == "__main__":
-
-    # use_reloader=False prevents the server
-    # from restarting while we are testing
+    init_database()
     app.run(debug=True, use_reloader=False)
