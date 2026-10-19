@@ -55,6 +55,16 @@
                 Enter your workout information below.
             </p>
 
+            {% if error %}
+            <p class="tracking-error">{{ error }}</p>
+            {% endif %}
+
+            {% if saved %}
+            <p class="tracking-success">
+                Workout saved successfully!
+            </p>
+            {% endif %}
+
             <form action="/workouts" method="POST">
 
                 <label for="workout_type">Workout Type</label>
