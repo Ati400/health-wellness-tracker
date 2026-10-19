@@ -34,7 +34,7 @@
 
         </aside>
 
-        <!-- main Content -->
+        <!-- Main Content -->
         <main class="dashboard-main">
 
             <header class="dashboard-header">
@@ -47,7 +47,7 @@
                 </div>
             </header>
 
-            <!-- water Form -->
+            <!-- water form -->
             <section class="tracking-panel">
 
                 <h2>Add Water Entry</h2>
@@ -82,6 +82,46 @@
 
                 </form>
 
+            </section>
+
+            <!-- saved water entries -->
+            <section class="tracking-panel">
+                <h2>My Water Entries</h2>
+
+                {% if entries %}
+                    {% for entry in entries %}
+
+                    <div class="tracking-entry entry-with-menu">
+
+                        <div>
+                            <strong>{{ entry["amount"] }} mL</strong>
+                            <p>Water Intake</p>
+                            <small>{{ entry["entry_date"] }}</small>
+                        </div>
+
+                        <!-- three dot menu -->
+                        <details class="entry-menu">
+                            <summary aria-label="Entry options">&#8942;</summary>
+
+                            <div class="entry-menu-dropdown">
+                                <form
+                                    action="/delete-entry/water/{{ entry['id'] }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Delete this water entry?');"
+                                >
+                                    <button type="submit" class="menu-delete">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </details>
+
+                    </div>
+
+                    {% endfor %}
+                {% else %}
+                    <p class="tracking-description">No water entries yet.</p>
+                {% endif %}
             </section>
 
         </main>
