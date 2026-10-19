@@ -107,6 +107,23 @@
                         <small>{{ entry["entry_date"] }}</small>
                     </div>
 
+                    <!-- Three-dot menu -->
+                    <details class="entry-menu">
+                        <summary aria-label="Entry options">&#8942;</summary>
+
+                        <div class="entry-menu-dropdown">
+                            <form
+                                action="/delete-entry/workouts/{{ entry['id'] }}"
+                                method="POST"
+                                onsubmit="return confirm('Delete this workout entry?');"
+                            >
+                                <button type="submit" class="menu-delete">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </details>
+
                 </div>
 
                 {% endfor %}
