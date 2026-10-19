@@ -36,6 +36,45 @@
     <!-- main content -->
     <main class="dashboard-main">
 
+        <header class="dashboard-header">
+            <div>
+                <p class="section-label">DAILY WELLNESS TRACKING</p>
+                <h1>Sleep Tracking</h1>
+                <p class="subtitle">
+                    Track your sleep and build healthy habits.
+                </p>
+            </div>
+        </header>
+
+        <!-- sleep form -->
+        <section class="tracking-panel">
+
+            <h2>Add Sleep Entry</h2>
+
+            <p class="tracking-description">
+                Record how many hours you slept.
+            </p>
+
+            <form action="/sleep" method="POST">
+
+                <label for="hours">Hours of Sleep</label>
+                <input
+                    type="number"
+                    id="hours"
+                    name="hours"
+                    placeholder="Example: 8"
+                    min="0.1"
+                    max="24"
+                    step="0.1"
+                    required
+                >
+
+                <button type="submit">Save Sleep</button>
+
+            </form>
+
+        </section>
+
     </main>
 
 </div>
