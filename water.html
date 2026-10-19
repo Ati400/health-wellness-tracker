@@ -47,6 +47,33 @@
                 </div>
             </header>
 
+            <!-- Water Form -->
+            <section class="tracking-panel">
+
+                <h2>Add Water Entry</h2>
+
+                <p class="tracking-description">
+                    Record how much water you drink.
+                </p>
+
+                <form action="/water" method="POST">
+
+                    <label for="amount">Water Amount (mL)</label>
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        placeholder="Example: 500"
+                        min="1"
+                        required
+                    >
+
+                    <button type="submit">Save Water</button>
+
+                </form>
+
+            </section>
+
         </main>
 
     </div>
