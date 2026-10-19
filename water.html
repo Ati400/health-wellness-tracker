@@ -47,7 +47,7 @@
                 </div>
             </header>
 
-            <!-- Water Form -->
+            <!-- water Form -->
             <section class="tracking-panel">
 
                 <h2>Add Water Entry</h2>
@@ -55,6 +55,16 @@
                 <p class="tracking-description">
                     Record how much water you drink.
                 </p>
+
+                {% if error %}
+                <p class="tracking-error">{{ error }}</p>
+                {% endif %}
+
+                {% if saved %}
+                <p class="tracking-success">
+                    Water entry saved successfully!
+                </p>
+                {% endif %}
 
                 <form action="/water" method="POST">
 
