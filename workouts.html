@@ -46,6 +46,42 @@
             </div>
         </header>
 
+        <!-- workout form -->
+        <section class="tracking-panel">
+
+            <h2>Add Workout</h2>
+
+            <p class="tracking-description">
+                Enter your workout information below.
+            </p>
+
+            <form action="/workouts" method="POST">
+
+                <label for="workout_type">Workout Type</label>
+                <input
+                    type="text"
+                    id="workout_type"
+                    name="workout_type"
+                    placeholder="Example: Running"
+                    required
+                >
+
+                <label for="duration">Duration (minutes)</label>
+                <input
+                    type="number"
+                    id="duration"
+                    name="duration"
+                    placeholder="Example: 30"
+                    min="1"
+                    required
+                >
+
+                <button type="submit">Save Workout</button>
+
+            </form>
+
+        </section>
+
     </main>
 
 </div>
