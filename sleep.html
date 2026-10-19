@@ -55,6 +55,16 @@
                 Record how many hours you slept.
             </p>
 
+            {% if error %}
+            <p class="tracking-error">{{ error }}</p>
+            {% endif %}
+
+            {% if saved %}
+            <p class="tracking-success">
+                Sleep entry saved successfully!
+            </p>
+            {% endif %}
+
             <form action="/sleep" method="POST">
 
                 <label for="hours">Hours of Sleep</label>
@@ -73,6 +83,46 @@
 
             </form>
 
+        </section>
+
+        <!-- saved sleep entries -->
+        <section class="tracking-panel">
+            <h2>My Sleep Entries</h2>
+
+            {% if entries %}
+                {% for entry in entries %}
+
+                <div class="tracking-entry entry-with-menu">
+
+                    <div>
+                        <strong>{{ entry["hours"] }} hours</strong>
+                        <p>Sleep Duration</p>
+                        <small>{{ entry["entry_date"] }}</small>
+                    </div>
+
+                    <!-- the three dot menu -->
+                    <details class="entry-menu">
+                        <summary aria-label="Entry options">&#8942;</summary>
+
+                        <div class="entry-menu-dropdown">
+                            <form
+                                action="/delete-entry/sleep/{{ entry['id'] }}"
+                                method="POST"
+                                onsubmit="return confirm('Delete this sleep entry?');"
+                            >
+                                <button type="submit" class="menu-delete">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </details>
+
+                </div>
+
+                {% endfor %}
+            {% else %}
+                <p class="tracking-description">No sleep entries yet.</p>
+            {% endif %}
         </section>
 
     </main>
