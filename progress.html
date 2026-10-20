@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeTrack - My Progress</title>
+    
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body class="dashboard-page">
+    
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <h2 class="sidebar-logo">LifeTrack</h2>
+
+            <p class="sidebar-subtitle">
+                Health & Wellness
+            </p>
+
+            <nav class="sidebar-nav">
+
+                <a href="/dashboard">Dashboard</a>
+
+                <a href="/progress" class="active">My Progress</a>
+
+                <a href="/water">Water</a>
+
+                <a href="/workouts">Workouts</a>
+
+                <a href="/sleep">Sleep</a>
+
+                <a href="/nutrition">Nutrition</a>
+
+                <a href="/profile">My Profile</a>
+
+            </nav>
+
+            <a href="/logout" class="sidebar-logout">
+                Logout
+            </a>
+
+        </aside>
+
+        <!-- Maint content -->
+        <main class="dashboard-main">
+
+            <header class="dashboard-header">
+
+                <div>
+                    <p class="section-label">
+                        WELLNESS OVERVIEW
+                    </p>
+
+                    <h1>My Progress</h1>
+
+                    <p class="subtitle">
+                        See all your daily wellness activity in one place.
+                    </p>
+
+                </div>
+
+            </header>
+
+            <!-- Daily totals -->
+            <h2 class="section-heading">
+                Today's Summary
+            </h2>
+
+            <p class="tracking-description">
+                {{ today }}
+            </p>
+
+            <div class="tracking-grid">
+
+                <!-- Water -->
+                <div class="dashboard-card">
+
+                    <h3>Water</h3>
+
+                    <p class="progress-value">
+                        {{ water_total }} mL
+                    </p>
+
+                    <p>Total water recorded today</p>
+
+                    <a href="/water">View Water</a>
+
+                </div>
+
+                <!-- Workouts -->
+                <div class="dashboard-card">
+
+                    <h3>Workouts</h3>
+
+                    <p class="progress-value">
+                        {{ workout_total }} min
+                    </p>
+
+                    <p>Total workout time today</p>
+
+                    <a href="/workout">View Workouts</a>
+
+                </div>
+
+                <!-- Sleep -->
+                <div class="dashboard-card">
+
+                    <h3>Sleep</h3>
+
+                    <p class="progress-value">
+                        {{ sleep_total }} hours
+                    </p>
+
+                    <p>Total sleep recorded today</p>
+
+                    <a href="/sleep">View Sleep</a>
+
+                </div>
+
+
+                <!-- Nutrition -->
+                <div class="dashboard-card">
+
+                    <h3>Nutrition</h3>
+
+                    <p class="progress-value">
+                        {{ calorie_total }} cal
+                    </p>
+
+                    <p>Total calories recorded today</p>
+
+                    <a href="/nutrition">View Nutrition</a>
+
+                </div>
+
+            </div>
+
+            <!-- Weekly Progress Chart -->
+            <section class="tracking-panel">
+
+                <h2>Weekly Progress</h2>
+
+                <p class="tracking-description">
+                    View your wellness activity over the past 7 days.
+                </p>
+
+                <canvas id="weeklyChart"></canvas>
+
+            </section>
+
+
+            <!-- Recent activity -->
+            <section class="tracking-panel">
+
+                <h2>Recent Activity</h2>
+
+                <p class="tracking-description">
+                    Your latest entries across all
+                    tracking categories.
+                </p>
+
+                {% if recent_entries %}
+
+                    {% for entry in recent_entries %}
+
+                    <div class="tracking-entry">
+
+                        <strong>
+                            {{ entry["category"] }}
+                        </strong>
+
+                        <p>
+                            {{ entry["details"] }}
+                        </p>
+
+                        <small>
+                            {{ entry["entry_date"] }}
+                        </small>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="tracking-description">
+                        No tracking activity yet.
+                    </p>
+
+                {% endif %}
+
+            </section>
+
+            <footer class="dashboard-footer">
+                LifeTrack - Health and Wellness
+            </footer>
+            
+        </main>
+
+    </div>
+</body>
+</html>
