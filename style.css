@@ -489,6 +489,34 @@ body.dashboard-page {
     text-decoration: none;
 }
 
+/* ===================================
+   WELCOME BANNER
+=================================== */
+
+.welcome-banner {
+    background: linear-gradient(
+        120deg,
+        #d9f0df,
+        #edf8ef
+    );
+
+    padding: 30px;
+    border-radius: 18px;
+
+    margin-top: 25px;
+    margin-bottom: 35px;
+}
+
+.welcome-banner h2 {
+    color: #174f3b;
+    margin-top: 0;
+}
+
+.welcome-banner p {
+    color: #52715d;
+    line-height: 1.6;
+}
+
 /*
 Larger computer screen,
 makes the website look like a mobile application.
