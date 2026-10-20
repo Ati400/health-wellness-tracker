@@ -261,6 +261,233 @@ a:hover {
     margin-top: 15px;
 }
 
+/* ===================================
+   TRACKING PAGES
+=================================== */
+
+/* Saved entries */
+.tracking-entry {
+    background-color: #f7fbf8;
+
+    border: 1px solid #d5e9da;
+    border-radius: 12px;
+
+    padding: 16px;
+    margin: 12px 0;
+    text-align: left;
+}
+
+/* Entry names */
+.tracking-entry strong {
+    display: block;
+
+    color: #1b5e20;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+/* Entry information */
+.tracking-entry p {
+    margin: 6px 0;
+    color: #52685a;
+}
+
+/* Entry dates */
+.tracking-entry small {
+    color: #7b8d80;
+    font-size: 12px;
+}
+
+/* Tracking error */
+.tracking-error {
+    color: #c62828;
+    margin-bottom: 12px;
+}
+
+/* Tracking success */
+.tracking-success {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+/* Back to dashboard */
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    color: #1b5e20;
+    text-decoration: underline;
+}
+
+/* ===================================
+   NEW DESKTOP DASHBOARD
+=================================== */
+
+/* Dashboard body */
+body.dashboard-page {
+    display: block;
+    background: #f3f8f4;
+    min-height: 100vh;
+}
+
+/* Main dashboard layout */
+.dashboard-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ===================================
+   SIDEBAR
+=================================== */
+
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+
+    background-color: #174f3b;
+    color: white;
+
+    padding: 35px 22px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* LifeTrack logo */
+.sidebar-logo {
+    color: white;
+    font-size: 28px;
+    margin: 0;
+}
+
+/* Sidebar subtitle */
+.sidebar-subtitle {
+    color: #b8dcc6;
+    font-size: 13px;
+
+    margin-top: 8px;
+    margin-bottom: 40px;
+}
+
+/* Sidebar navigation */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Sidebar links */
+.sidebar-nav a {
+    display: block;
+
+    color: #e0f2e5;
+    text-decoration: none;
+
+    padding: 14px 16px;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: 0.2s;
+}
+
+/* Active navigation */
+.sidebar-nav a.active {
+    background-color: #2e7d55;
+    color: white;
+}
+
+/* Sidebar hover */
+.sidebar-nav a:hover {
+    background-color: #286b4d;
+    color: white;
+}
+
+/* Logout */
+.sidebar-logout {
+    margin-top: auto;
+
+    color: #e0f2e5;
+    text-decoration: none;
+
+    padding: 14px 16px;
+    border-radius: 10px;
+}
+
+/* Logout hover */
+.sidebar-logout:hover {
+    background-color: #286b4d;
+    color: white;
+}
+
+/* ===================================
+   MAIN DASHBOARD CONTENT
+=================================== */
+
+.dashboard-main {
+    flex: 1;
+    min-width: 0;
+
+    max-width: 1400px;
+    margin: 0 auto;
+
+    padding: 45px 55px;
+}
+
+/* Dashboard header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Small section label */
+.section-label {
+    color: #39825b;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Welcome title */
+.dashboard-header h1 {
+    color: #174f3b;
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+/* Profile button */
+.profile-button {
+    display: inline-block;
+
+    background-color: white;
+    color: #174f3b;
+
+    padding: 12px 20px;
+    border-radius: 10px;
+
+    border: 1px solid #d5e9da;
+
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.profile-button:hover {
+    background-color: #e8f5e9;
+    text-decoration: none;
+}
 
 /*
 Larger computer screen,
