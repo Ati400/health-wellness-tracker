@@ -517,6 +517,73 @@ body.dashboard-page {
     line-height: 1.6;
 }
 
+/* ===================================
+   DAILY TRACKING CARDS
+=================================== */
+
+/* Tracking section heading */
+.section-heading {
+    color: #174f3b;
+    margin-bottom: 20px;
+}
+
+/* Tracking card grid */
+.tracking-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+/* Individual cards */
+.dashboard-main .dashboard-card {
+    background-color: white;
+
+    border: 1px solid #dce9df;
+    border-radius: 16px;
+
+    padding: 28px;
+    margin: 0;
+
+    box-shadow:
+        0 4px 16px rgba(23, 79, 59, 0.04);
+
+    transition: 0.2s;
+}
+
+/* Card hover */
+.dashboard-main .dashboard-card:hover {
+    border-color: #81c784;
+    background-color: #f7fbf8;
+
+    transform: translateY(-3px);
+}
+
+/* Card headings */
+.dashboard-main .dashboard-card h3 {
+    color: #174f3b;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+/* Card descriptions */
+.dashboard-main .dashboard-card p {
+    color: #6c8072;
+    line-height: 1.6;
+}
+
+/* Tracking links */
+.dashboard-main .dashboard-card a {
+    display: inline-block;
+
+    color: #287a4b;
+    font-weight: bold;
+
+    margin-top: 15px;
+}
+
 /*
 Larger computer screen,
 makes the website look like a mobile application.
