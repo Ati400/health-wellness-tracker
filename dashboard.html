@@ -5,97 +5,210 @@
 
     <meta charset="UTF-8">
 
-    
+    <!--Make the website friendly for mobile-->
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <title>Dashboard</title>
 
-    
+    <!--Connect CSS-->
     <link rel="stylesheet" href="/style.css">
+
+    <!--Connect JavaScript-->
+    <script src="/script.js" defer></script>
 
 </head>
 
+<body class="dashboard-page">
 
-<body>
+    <div class="dashboard-layout">
 
-    <div class="app-container">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
 
-        
-        <h1 id="welcomeMessage">
-            Welcome!
-        </h1>
+            <h2 class="sidebar-logo">
+                LifeTrack
+            </h2>
 
-        <p class="subtitle">
-            Your health and wellness journey starts here.
-        </p>
-
-
-        <!-- Water section -->
-        <div class="dashboard-card">
-
-            <h3>Water</h3>
-
-            <p>
-                Water tracking coming soon.
+            <p class="sidebar-subtitle">
+                Health & Wellness
             </p>
 
-        </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="active">
+                    Dashboard
+                </a>
 
+                <a href="/progress">
+                    My progress
+                </a>
 
-        <!-- Workout section -->
-        <div class="dashboard-card">
+                <a href="/workout">
+                    Workouts
+                </a>
 
-            <h3>Workouts</h3>
+                <a href="sleep">
+                    Sleep
+                </a>
 
-            <p>
-                Workout tracking coming soon.
-            </p>
+                <a href="/nutrition">
+                    Nutrition
+                </a>
 
-        </div>
+                <a href="/profile">
+                    My Profile
+                </a>
 
+            </nav>
 
-        <!-- Sleep section -->
-        <div class="dashboard-card">
+            <!-- Logout -->
+            <a href="/logout" class="sidebar-logout">
+                Logout
+            </a>
 
-            <h3>Sleep</h3>
-
-            <p>
-                Sleep tracking coming soon.
-            </p>
-
-        </div>
-
-
-        <!-- Nutrition section -->
-        <div class="dashboard-card">
-
-            <h3>Nutrition</h3>
-
-            <p>
-                Nutrition tracking coming soon.
-            </p>
-
-        </div>
-
-
-        <!-- Open profile page -->
-        <a href="/profile">
-            <button>
-                My Profile
-            </button>
-        </a>
-
-
-        <!-- Logout -->
-        <button id="logoutButton">
-            Logout
-        </button>
+        </aside>
 
     </div>
 
+    <!-- MAIN DASHBOARD -->
+    <main class="dashboard-main">
 
-    <script src="/script.js"></script>
+        <!-- Dashboard header -->
+        <header class="dashboard-header">
+            
+            <div>
+
+                <p class="section-label">
+                    MY WELLNESS DASHBOARD
+                </p>
+
+                <h1 id="welcome-message">
+                    Welcome to LifeTrack
+                </h1>
+
+                <p class="subtitle">
+                    Track your health and build better habbits every day.
+                </p>
+
+            </div>
+
+            <!-- Profile button -->
+            <a href="/profile" class="profile-button">
+                My Profile
+            </a>
+
+        </header>
+        
+        <!-- WELCOME SECTION -->
+        <section class="welcome-banner">
+
+        </section>
+
+        <!-- DAILY TRACKING -->
+        <h2>
+            Daily Tracking
+        </h2>
+
+        <div class="tracking-grid">
+
+            <!-- WATER TRACKING -->
+            <div class="dashboard-card">
+
+                <h3>Water</h3>
+
+                <p>
+                    Track your daily water intake and stay hydrated.
+                </p>
+
+                <a href="/water">
+                    Track Water &rarr;
+                </a>
+
+            </div>
+
+            <!-- WORKOUT TRACKING -->
+            <div class="dashboard-card">
+
+                <h3>Workouts</h3>
+
+                <p>
+                    Record your daily excercises and workout duration.
+                </p>
+
+                <a href="/workout">
+                    Track Workouts &rarr;
+                </a>
+
+            </div>
+
+            <!-- SLEEP TRACKING -->
+            <div class="dashboard-card">
+
+                <h3>Sleep</h3>
+
+                <p>
+                    Track your daily sleep hours and build better sleep habits.
+                </p>
+
+                <a href="/sleep">
+                    Track Sleep &rarr;
+                </a>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <h3>Nutrition</h3>
+
+                <p>
+                    Record your daily food intake and calories.
+                </p>
+
+                <a href="/nutrition">
+                    Track Nutrition &rarr;
+                </a>
+
+            </div>
+
+            <!-- DASHBOARD FOOTER -->
+            <footer class="dashboard-footer">
+
+                <p>
+                    LifeTrack - Health and Wellness
+                </p>
+
+            </footer>
+
+        </div>
+
+    </main>
+
+
+    <!-- DISPLAY LOGGED-IN USER -->
+        
+    <script>
+
+        // Get information about the logged-in user
+        fetch("/user")
+
+            .then(response => response.json())
+
+            .then(user => {
+
+                // Show the user's name
+                if (user.name) {
+                    
+                    document.getElementById(
+                        "welcome-message"
+                    ).textContent = 
+                    "Welcome back, " + user.name + "!";
+                }
+            })
+
+            .catch(error => {
+                console.log("Unable to load user:", error)
+            });
+    </script>
 
 </body>
 
