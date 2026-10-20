@@ -10,7 +10,11 @@ body {
 
     font-family: Arial, sans-serif;
 
-    background-color: #eef2f3;
+    background-color: linear-gradient(
+        135deg,
+        #e8f5e9,
+        #f5faf6
+    );
 
    
     display: flex;
@@ -21,16 +25,16 @@ body {
 }
 
 
-
+/* Main application container */
 .app-container {
     width: 100%;
     max-width: 420px;
 
     min-height: 100vh;
 
-    background-color: white;
+    background-color: #ffffff;
 
-    padding: 40px 25px;
+    padding: 40px 28px;
 
     text-align: center;
 }
@@ -38,21 +42,24 @@ body {
 
 /* Main page title */
 h1 {
-    margin-bottom: 10px;
+    color: #1b5e20;
+    font-size: 30px;
+    margin-bottom: 12px;
 }
 
 
 /* Second page title */
 h2 {
+    color: #2e7d32;
     margin-top: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 
 /* Text below page titles */
 .subtitle {
-    color: #666;
-
+    color: #718076;
+    line-height: 1.6;
     margin-bottom: 30px;
 }
 
@@ -63,9 +70,10 @@ label {
 
     text-align: left;
 
-    margin-top: 15px;
-    margin-bottom: 5px;
+    margin-top: 16px;
+    margin-bottom: 7px;
 
+    color: #284d34;
     font-weight: bold;
 }
 
@@ -76,10 +84,23 @@ input {
 
     padding: 14px;
 
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    border: 1px solid #c8dfce;
+    border-radius: 10px;
+
+    background-color: #f5faf6;
+    color: #243b2b;
 
     font-size: 16px;
+    transition: 0.2s;
+}
+
+/* Input focus */
+input:focus {
+    outline: none;
+    border-color: #43a047;
+
+    box-shadow: 
+        0 0 0 3px rgba(67, 160, 71, 0.12);
 }
 
 
@@ -87,38 +108,47 @@ input {
 button {
     width: 100%;
 
-    padding: 14px;
+    padding: 15px;
 
-    margin-top: 20px;
+    margin-top: 22px;
 
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
 
-    background-color: #333;
+    background-color: #2e7d32;
     color: white;
 
     font-size: 16px;
+    font-weight: bold;
 
     cursor: pointer;
+    transition: 0.2s;
 }
 
-
-
+/* Button hover */
 button:hover {
-    background-color: #555;
+    background-color: #1b5e20;
+    transform: translateY(-1px);
 }
 
-
-
+/* Bottom text */
 .bottom-text {
     margin-top: 25px;
+    color: #53675a;
 }
 
 
 /* Links */
 a {
+    color: #2e7d32;
     text-decoration: none;
     font-weight: bold;
+}
+
+/* Link hover */
+a:hover {
+    color: #1b5e20;
+    text-decoration: underline;
 }
 
 
@@ -126,56 +156,85 @@ a {
 .dashboard-card {
     text-align: left;
 
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    background-color: #f7fbf8;
 
-    padding: 15px;
+    border: 1px solid #d5e9da;
+    border-radius: 14px;
 
-    margin-top: 15px;
+    padding: 20px;
+    margin-top: 16px;
+
+    box-shadow:
+        0 3px 10px rgba(46, 125, 50, 0.04);
+
+    transition: 0.2s;
+}
+
+.dashboard-card:hover {
+    border-color: #81c784;
+    background-color: #edf7ef;
+    transform: translateY(-2px);
+}
+
+/* Dashboard card titles */
+.dashboard-card h3 {
+    color: #1b5e20;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.dashboard-card p {
+    color: #617268;
+    line-height: 1.5;
+}
+
+.dashboard-card a {
+    display: inline-block;
+    margin-top: 5px;
+
+    color: #2e7d32;
+    font-weight: bold;
 }
 
 /* Password requirement text */
 .password-info {
     text-align: left;
-    color: #666;
+    color: #718076;
     font-size: 13px;
     margin-top: 5px;
 }
-
-/* Dashboard card titles */
-.dashboard-card h3 {
-    margin-top: 0;
-}
-
 
 /* Profile information box */
 .profile-card {
     text-align: left;
 
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    background-color: #f7fbf8;
 
-    padding: 20px;
+    border: 1px solid #d5e9da;
+    border-radius: 14px;
+
+    padding: 22px;
 
     margin-top: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 
 /* Profile labels */
 .profile-card label {
+    color: #1b5e20;
     font-weight: bold;
 
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 
 /* Profile information */
 .profile-card p {
-    margin-top: 5px;
+    margin-top: 6px;
     margin-bottom: 20px;
 
-    color: #555;
+    color: #52685a;
 }
 
 
@@ -183,7 +242,7 @@ a {
 .error-message {
     display: none;
 
-    color: red;
+    color: #c62828;
 
     font-size: 14px;
 
@@ -195,7 +254,7 @@ a {
 .success-message {
     display: none;
 
-    color: green;
+    color: #2e7d32;
 
     font-size: 14px;
 
