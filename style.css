@@ -684,6 +684,70 @@ body.dashboard-page {
 
 }
 
+/* THREE-DOT MENU */
+
+.entry-with-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.entry-menu {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.entry-menu summary {
+    list-style: none;
+    cursor: pointer;
+    font-size: 25px;
+    color: #174f3b;
+    padding: 0 10px;
+    border-radius: 8px;
+}
+
+.entry-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.entry-menu summary:hover {
+    background-color: #e5f1e9;
+}
+
+.entry-menu-dropdown {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 10;
+    min-width: 110px;
+    padding: 6px;
+    background: white;
+    border: 1px solid #dce9df;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.entry-menu-dropdown form {
+    margin: 0;
+}
+
+.tracking-panel .menu-delete {
+    width: 100%;
+    max-width: none;
+    background: white;
+    color: #c62828;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+.tracking-panel .menu-delete:hover {
+    background-color: #fff0f0;
+}
 
 /*
 Larger computer screen,
