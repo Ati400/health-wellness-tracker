@@ -35,12 +35,17 @@
             </p>
 
             <nav class="sidebar-nav">
+
                 <a href="/dashboard" class="active">
                     Dashboard
                 </a>
 
                 <a href="/progress">
                     My progress
+                </a>
+
+                <a href="/water">
+                    Water
                 </a>
 
                 <a href="/workout">
@@ -68,120 +73,122 @@
 
         </aside>
 
-    </div>
+    
 
-    <!-- MAIN DASHBOARD -->
-    <main class="dashboard-main">
+        <!-- MAIN DASHBOARD -->
+        <main class="dashboard-main">
 
-        <!-- Dashboard header -->
-        <header class="dashboard-header">
+            <!-- Dashboard header -->
+            <header class="dashboard-header">
+                
+                <div>
+
+                    <p class="section-label">
+                        MY WELLNESS DASHBOARD
+                    </p>
+
+                    <h1 id="welcome-message">
+                        Welcome to LifeTrack
+                    </h1>
+
+                    <p class="subtitle">
+                        Track your health and build better habbits every day.
+                    </p>
+
+                </div>
+
+                <!-- Profile button -->
+                <a href="/profile" class="profile-button">
+                    My Profile
+                </a>
+
+            </header>
             
-            <div>
+            <!-- WELCOME SECTION -->
+            <section class="welcome-banner">
 
-                <p class="section-label">
-                    MY WELLNESS DASHBOARD
-                </p>
+            </section>
 
-                <h1 id="welcome-message">
-                    Welcome to LifeTrack
-                </h1>
+            <!-- DAILY TRACKING -->
+            <h2>
+                Daily Tracking
+            </h2>
 
-                <p class="subtitle">
-                    Track your health and build better habbits every day.
-                </p>
+            <div class="tracking-grid">
+
+                <!-- WATER TRACKING -->
+                <div class="dashboard-card">
+
+                    <h3>Water</h3>
+
+                    <p>
+                        Track your daily water intake and stay hydrated.
+                    </p>
+
+                    <a href="/water">
+                        Track Water &rarr;
+                    </a>
+
+                </div>
+
+                <!-- WORKOUT TRACKING -->
+                <div class="dashboard-card">
+
+                    <h3>Workouts</h3>
+
+                    <p>
+                        Record your daily excercises and workout duration.
+                    </p>
+
+                    <a href="/workout">
+                        Track Workouts &rarr;
+                    </a>
+
+                </div>
+
+                <!-- SLEEP TRACKING -->
+                <div class="dashboard-card">
+
+                    <h3>Sleep</h3>
+
+                    <p>
+                        Track your daily sleep hours and build better sleep habits.
+                    </p>
+
+                    <a href="/sleep">
+                        Track Sleep &rarr;
+                    </a>
+
+                </div>
+
+                <div class="dashboard-card">
+
+                    <h3>Nutrition</h3>
+
+                    <p>
+                        Record your daily food intake and calories.
+                    </p>
+
+                    <a href="/nutrition">
+                        Track Nutrition &rarr;
+                    </a>
+
+                </div>
+
+                <!-- DASHBOARD FOOTER -->
+                <footer class="dashboard-footer">
+
+                    <p>
+                        LifeTrack - Health and Wellness
+                    </p>
+
+                </footer>
 
             </div>
 
-            <!-- Profile button -->
-            <a href="/profile" class="profile-button">
-                My Profile
-            </a>
-
-        </header>
+        </main>
         
-        <!-- WELCOME SECTION -->
-        <section class="welcome-banner">
-
-        </section>
-
-        <!-- DAILY TRACKING -->
-        <h2>
-            Daily Tracking
-        </h2>
-
-        <div class="tracking-grid">
-
-            <!-- WATER TRACKING -->
-            <div class="dashboard-card">
-
-                <h3>Water</h3>
-
-                <p>
-                    Track your daily water intake and stay hydrated.
-                </p>
-
-                <a href="/water">
-                    Track Water &rarr;
-                </a>
-
-            </div>
-
-            <!-- WORKOUT TRACKING -->
-            <div class="dashboard-card">
-
-                <h3>Workouts</h3>
-
-                <p>
-                    Record your daily excercises and workout duration.
-                </p>
-
-                <a href="/workout">
-                    Track Workouts &rarr;
-                </a>
-
-            </div>
-
-            <!-- SLEEP TRACKING -->
-            <div class="dashboard-card">
-
-                <h3>Sleep</h3>
-
-                <p>
-                    Track your daily sleep hours and build better sleep habits.
-                </p>
-
-                <a href="/sleep">
-                    Track Sleep &rarr;
-                </a>
-
-            </div>
-
-            <div class="dashboard-card">
-
-                <h3>Nutrition</h3>
-
-                <p>
-                    Record your daily food intake and calories.
-                </p>
-
-                <a href="/nutrition">
-                    Track Nutrition &rarr;
-                </a>
-
-            </div>
-
-            <!-- DASHBOARD FOOTER -->
-            <footer class="dashboard-footer">
-
-                <p>
-                    LifeTrack - Health and Wellness
-                </p>
-
-            </footer>
-
-        </div>
-
-    </main>
+    </div>
 
 
     <!-- DISPLAY LOGGED-IN USER -->
