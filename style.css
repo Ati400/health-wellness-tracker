@@ -28,7 +28,7 @@ body {
 /* Main application container */
 .app-container {
     width: 100%;
-    max-width: 420px;
+    max-width: 440px;
 
     min-height: 100vh;
 
@@ -82,7 +82,7 @@ label {
 input {
     width: 100%;
 
-    padding: 14px;
+    padding: 15px;
 
     border: 1px solid #c8dfce;
     border-radius: 10px;
@@ -584,6 +584,107 @@ body.dashboard-page {
     margin-top: 15px;
 }
 
+/* ===================================
+   DASHBOARD FOOTER
+=================================== */
+
+.dashboard-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+
+    border-top: 1px solid #dce9df;
+
+    text-align: center;
+
+    color: #7b8d80;
+    font-size: 13px;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+=================================== */
+
+/* Original app on desktop */
+@media (min-width: 600px) {
+
+    .app-container {
+        min-height: 700px;
+
+        margin: 25px 0;
+        border-radius: 22px;
+
+        box-shadow:
+            0 8px 35px rgba(27, 94, 32, 0.10);
+    }
+
+}
+
+/* Tablet screens */
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .dashboard-main {
+        padding: 30px;
+    }
+
+}
+
+/* Mobile screens */
+@media (max-width: 650px) {
+
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+        padding: 20px;
+    }
+
+    .sidebar-subtitle {
+        margin-bottom: 15px;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .sidebar-nav a {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .sidebar-logout {
+        margin-top: 15px;
+    }
+
+    .dashboard-main {
+        padding: 25px 18px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-header h1 {
+        font-size: 26px;
+    }
+
+    .tracking-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
 /*
 Larger computer screen,
 makes the website look like a mobile application.
@@ -593,10 +694,11 @@ makes the website look like a mobile application.
     .app-container {
         min-height: 700px;
 
-        border-radius: 20px;
+        margin: 25px 0;
+        border-radius: 22px;
 
         box-shadow:
-            0 4px 20px rgba(0, 0, 0, 0.1);
+            0 8px 35px rgba(27, 94, 32, 0.10);
     }
 
 }
