@@ -749,20 +749,19 @@ body.dashboard-page {
     background-color: #fff0f0;
 }
 
-/*
-Larger computer screen,
-makes the website look like a mobile application.
-*/
-@media (min-width: 600px) {
+.forgot-password {
+    text-align: right;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
 
-    .app-container {
-        min-height: 700px;
+.forgot-password a {
+    color: #2e7d32;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
 
-        margin: 25px 0;
-        border-radius: 22px;
-
-        box-shadow:
-            0 8px 35px rgba(27, 94, 32, 0.10);
-    }
-
+.forgot-password a:hover {
+    text-decoration: underline;
 }
